@@ -23,6 +23,7 @@
     "express": "^4.14.0",
     "http-proxy": "^1.15.2",
     "mkdirp": "^0.5.1",
-    "myclinic-config": "^2.2.1"
+    "myclinic-config": "^2.2.1",
+    "myclinic-drawer-print-server": "^2.0.1"
   }
 }

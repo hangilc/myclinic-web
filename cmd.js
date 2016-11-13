@@ -10,29 +10,6 @@ var conti = require("conti");
 var http = require("http");
 var url = require("url");
 
-var subs = [
-	{
-		name: "practice",
-		module: require("myclinic-practice"),
-		configKey: "practice"
-	},
-	{
-		name: "shohousen",
-		module: require("myclinic-shohousen"),
-		configKey: "shohousen"
-	},
-	{
-		name: "refer",
-		module: require("myclinic-refer"),
-		configKey: "refer"
-	},
-	{
-		name: "pharma",
-		module: require("myclinic-pharma"),
-		configKey: "pharma"
-	}
-];
-
 var defaultSubs = [
 	{
 		name: "printer",
