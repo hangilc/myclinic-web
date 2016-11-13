@@ -133,14 +133,14 @@ function autoConfigKeys(subs){
 	return keys;
 }
 
-exports.runFromCommand = function(subs, programRunner){
+exports.runFromCommand = function(subs, defaultPort, programRunner){
 	if( programRunner ){
 		programRunner(program);
 	}
 	program
 		.option("-c, --config <configpath>", "Read configuration", "auto")
 		.option("-s, --service <service-url>", "Set service server", "http://localhost:9000")
-		.option("-p, --port <port>", "Set listening port", toInt, 9001)
+		.option("-p, --port <port>", "Set listening port", toInt, defaultPort)
 		.option("--printer-settings <dirname>", "Set printer settings directory", "./printer-settings")
 		.parse(process.argv);
 	
