@@ -143,7 +143,7 @@ exports.runFromCommand = function(subs, defaultPort, programRunner){
 		.option("-p, --port <port>", "Set listening port", toInt, defaultPort)
 		.option("--printer-settings <dirname>", "Set printer settings directory", "./printer-settings")
 		.parse(process.argv);
-	
+	ensureDir(program.printerSettings)
 	var allSubs = subs.concat(defaultSubs);
 	if( program.config === "auto" ){
 		tryAutoConfig(program.service, autoConfigKeys(allSubs), function(config){
