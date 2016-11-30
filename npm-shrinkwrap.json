@@ -415,13 +415,12 @@
       }
     },
     "myclinic-config": {
-      "version": "2.2.1",
-      "from": "https://registry.npmjs.org/myclinic-config/-/myclinic-config-2.2.1.tgz",
-      "resolved": "https://registry.npmjs.org/myclinic-config/-/myclinic-config-2.2.1.tgz",
+      "version": "2.3.2",
+      "from": "myclinic-config@2.3.2",
       "dependencies": {
         "ini": {
           "version": "1.3.4",
-          "from": "https://registry.npmjs.org/ini/-/ini-1.3.4.tgz",
+          "from": "ini@>=1.3.4 <2.0.0",
           "resolved": "https://registry.npmjs.org/ini/-/ini-1.3.4.tgz"
         }
       }
