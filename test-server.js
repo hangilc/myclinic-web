@@ -1,4 +1,4 @@
 "use strict";
 
 var web = require("./index");
-web.cmd.runFromCommand([]);
+web.cmd.runFromCommand([], { port: 11000 });

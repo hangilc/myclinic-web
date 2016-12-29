@@ -141,12 +141,12 @@ exports.runFromCommand = function(subs, config){
 		config = {};
 	}
 	var usePrinter = config.usePrinter;
-	var defaultPort = config.defaultPort || 12000;
+	var port = config.port || 12000;
 	program
 		.option("-c, --config <configpath>", "Read configuration", "auto")
 		.option("-s, --service <service-url>", "Set service server", 
 			"http://localhost:9000")
-		.option("-p, --port <port>", "Set listening port", toInt, defaultPort)
+		.option("-p, --port <port>", "Set listening port", toInt, port)
 	if( usePrinter ){
 		program.option("--printer-settings <dirname>", 
 			"Set printer settings directory", "./printer-settings")
