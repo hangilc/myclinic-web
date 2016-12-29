@@ -10,7 +10,7 @@ var conti = require("conti");
 var http = require("http");
 var url = require("url");
 
-var defaultSubsWithoutPrinter = [
+var defaultSubs = [
 	{
 		name: "service",
 		commandLineArg: function(program){
@@ -19,15 +19,15 @@ var defaultSubsWithoutPrinter = [
 	}
 ];
 
-var defaultSubs = defaultSubsWithoutPrinter.concat([
-	{
+function subPrinter(){
+	return {
 		name: "printer",
 		module: require("myclinic-drawer-print-server"),
 		commandLineArg: function(program){
 			this.config["setting-dir"] = program.printerSettings
 		}
-	}
-]);
+	};
+}
 
 function toInt(val){
 	return parseInt(val, 10);
@@ -152,10 +152,11 @@ exports.runFromCommand = function(subs, config){
 			"Set printer settings directory", "./printer-settings")
 	}
 	program.parse(process.argv)
+	var allSubs = subs.concat(defaultSubs);
 	if( usePrinter ){
 		ensureDir(program.printerSettings);
+		allSubs.push(subPrinter());
 	}
-	var allSubs = subs.concat(usePrinter ? defaultSubs : defaultSubsWithoutPrinter);
 	if( program.config === "auto" ){
 		tryAutoConfig(program.service, autoConfigKeys(allSubs), function(config){
 			run(allSubs, config, program);	
