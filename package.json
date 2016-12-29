@@ -24,5 +24,8 @@
     "http-proxy": "^1.15.2",
     "mkdirp": "^0.5.1",
     "myclinic-config": "^2.3.2"
+  },
+  "devDependencies": {
+    "myclinic-drawer-print-server": "^2.0.1"
   }
 }

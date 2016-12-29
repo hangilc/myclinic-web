@@ -24,7 +24,7 @@ var defaultSubs = defaultSubsWithoutPrinter.concat([
 		name: "printer",
 		module: require("myclinic-drawer-print-server"),
 		commandLineArg: function(program){
-			this.config["setting-dir"] = program.printerSetting
+			this.config["setting-dir"] = program.printerSettings
 		}
 	}
 ]);
@@ -151,7 +151,7 @@ exports.runFromCommand = function(subs, config){
 		program.option("--printer-settings <dirname>", 
 			"Set printer settings directory", "./printer-settings")
 	}
-	program.parse(process.argv);
+	program.parse(process.argv)
 	if( usePrinter ){
 		ensureDir(program.printerSettings);
 	}
