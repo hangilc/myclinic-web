@@ -10,14 +10,7 @@ var conti = require("conti");
 var http = require("http");
 var url = require("url");
 
-var defaultSubs = [
-	{
-		name: "printer",
-		module: require("myclinic-drawer-print-server"),
-		commandLineArg: function(program){
-			this.config["setting-dir"] = program.printerSetting
-		}
-	},
+var defaultSubsWithoutPrinter = [
 	{
 		name: "service",
 		commandLineArg: function(program){
@@ -25,6 +18,16 @@ var defaultSubs = [
 		}
 	}
 ];
+
+var defaultSubs = defaultSubsWithoutPrinter.concat([
+	{
+		name: "printer",
+		module: require("myclinic-drawer-print-server"),
+		commandLineArg: function(program){
+			this.config["setting-dir"] = program.printerSetting
+		}
+	}
+]);
 
 function toInt(val){
 	return parseInt(val, 10);
@@ -133,18 +136,24 @@ function autoConfigKeys(subs){
 	return keys;
 }
 
-exports.runFromCommand = function(subs, defaultPort, programRunner){
-	if( programRunner ){
-		programRunner(program);
+exports.runFromCommand = function(subs, config){
+	if( !config ){
+		config = {};
 	}
+	var usePrinter = config.usePrinter;
+	var defaultPort = config.defaultPort || 12000;
 	program
 		.option("-c, --config <configpath>", "Read configuration", "auto")
-		.option("-s, --service <service-url>", "Set service server", "http://localhost:9000")
+		.option("-s, --service <service-url>", "Set service server", 
+			"http://localhost:9000")
 		.option("-p, --port <port>", "Set listening port", toInt, defaultPort)
-		.option("--printer-settings <dirname>", "Set printer settings directory", "./printer-settings")
-		.parse(process.argv);
-	ensureDir(program.printerSettings)
-	var allSubs = subs.concat(defaultSubs);
+	if( usePrinter ){
+		program.option("--printer-settings <dirname>", 
+			"Set printer settings directory", "./printer-settings")
+		ensureDir(program.printerSettings);
+	}
+	program.parse(process.argv);
+	var allSubs = subs.concat(usePrinter ? defaultSubs : defaultSubsWithoutPrinter);
 	if( program.config === "auto" ){
 		tryAutoConfig(program.service, autoConfigKeys(allSubs), function(config){
 			run(allSubs, config, program);	
