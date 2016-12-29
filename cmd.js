@@ -150,9 +150,11 @@ exports.runFromCommand = function(subs, config){
 	if( usePrinter ){
 		program.option("--printer-settings <dirname>", 
 			"Set printer settings directory", "./printer-settings")
-		ensureDir(program.printerSettings);
 	}
 	program.parse(process.argv);
+	if( usePrinter ){
+		ensureDir(program.printerSettings);
+	}
 	var allSubs = subs.concat(usePrinter ? defaultSubs : defaultSubsWithoutPrinter);
 	if( program.config === "auto" ){
 		tryAutoConfig(program.service, autoConfigKeys(allSubs), function(config){
