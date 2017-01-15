@@ -26,11 +26,12 @@ exports.run = function(config, subs){
 			var conf = sub.config;
 			subapp.use(bodyParser.urlencoded({ extended: false }));
 			subapp.use(bodyParser.json());
-			mod.initApp(subapp, conf);
+			var subpath = "/" + name;
+			mod.initApp(subapp, conf, subpath);
 			if( mod.staticDir ){
 				subapp.use(express.static(mod.staticDir));
 			}
-			app.use("/" + name, subapp);
+			app.use(subpath, subapp);
 		}
 	});
 
