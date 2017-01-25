@@ -27,10 +27,10 @@ exports.run = function(config, subs){
 			subapp.use(bodyParser.urlencoded({ extended: false }));
 			subapp.use(bodyParser.json());
 			var subpath = "/" + name;
+			mod.initApp(subapp, conf, subpath);
 			if( mod.staticDir ){
 				subapp.use(express.static(mod.staticDir));
 			}
-			mod.initApp(subapp, conf, subpath);
 			app.use(subpath, subapp);
 		}
 	});
